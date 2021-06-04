@@ -10,15 +10,21 @@ namespace ReservationMVC.Models
     {
         int numberOfDays;
         Days firstDayOfMonth;
-
-        public Month(int numberOfDays, Days firstDayOfMonth)
+        Dictionary<int, Day> daysOfMonth;
+        public Month()
         {
-            this.numberOfDays = numberOfDays;
-            this.FirstDayOfMonth = firstDayOfMonth;
+
+        }
+        public Month(int numberOfDays, Days firstDayOfMonth, Dictionary<int, Day> daysOfMonth)
+        {
+            NumberOfDays = numberOfDays;
+            FirstDayOfMonth = firstDayOfMonth;
+            this.DaysOfMonth = daysOfMonth;
         }
 
         public Days FirstDayOfMonth { get => firstDayOfMonth; set => firstDayOfMonth = value; }
         public int NumberOfDays { get => numberOfDays; set => numberOfDays = value; }
+        public Dictionary<int, Day> DaysOfMonth { get => daysOfMonth; set => daysOfMonth = value; }
 
         public override bool Equals(object obj)
         {

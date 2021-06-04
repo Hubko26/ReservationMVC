@@ -8,32 +8,38 @@ namespace ReservationMVC.Models
 {
     public class Day
     {
-        bool isValidDate;
         Days dayName;
-        List<Dictionary<int, bool>> hourOccupancy = new List<Dictionary<int, bool>>();
+        Dictionary<int, bool> hourOccupied = new Dictionary<int, bool>();
 
-        public Day(List<Dictionary<int, bool>> hourOccupancy, Days dayName, bool isWorkingDay)
+        public Day()
         {
-            HourOccupancy = hourOccupancy;
-            DayName = dayName;
-            IsWorkingDay = isWorkingDay;
+
         }
 
-        public List<Dictionary<int, bool>> HourOccupancy { get => hourOccupancy; set => hourOccupancy = value; }
+        public Day(Dictionary<int, bool> hourOccupied, Days dayName)
+        {
+            HourOccupied = hourOccupied;
+            DayName = dayName;
+        }
+
+        public Dictionary<int, bool> HourOccupied { get => hourOccupied; set => hourOccupied = value; }
         public Days DayName { get => dayName; set => dayName = value; }
-        public bool IsWorkingDay { get => isValidDate; set => isValidDate = value; }
+
+        public bool DayIsValid()
+        {
+            return HourOccupied.Any(x => x.Value == false);
+        }
 
         public override bool Equals(object obj)
         {
             return obj is Day day &&
-                   EqualityComparer<List<Dictionary<int, bool>>>.Default.Equals(HourOccupancy, day.HourOccupancy) &&
-                   DayName == day.DayName &&
-                   isValidDate == day.isValidDate;
+                   EqualityComparer<Dictionary<int, bool>>.Default.Equals(HourOccupied, day.hourOccupied) &&
+                   DayName == day.DayName;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(HourOccupancy, DayName, IsWorkingDay);
+            return HashCode.Combine(HourOccupied, DayName);
         }
     }
 }
